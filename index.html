@@ -1,118 +1,218 @@
-<!DOCTYPE html><html lang="en">
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Secure Download Page</title>
+  <title> Secret My Files</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  
+  <!-- Added Google Fonts for better typography -->
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
     body {
-      font-family: Arial, sans-serif;
-      background: #f2f2f2;
+      font-family: 'Poppins', sans-serif;
+      /* Animated Modern Gradient Background */
+      background: linear-gradient(-45deg, #667eea, #764ba2, #2b5876, #4e4376);
+      background-size: 400% 400%;
+      animation: gradientBG 15s ease infinite;
       display: flex;
       justify-content: center;
       align-items: center;
       min-height: 100vh;
       margin: 0;
-    }.container {
-  background: white;
-  padding: 30px;
-  border-radius: 12px;
-  width: 350px;
-  box-shadow: 0 0 15px rgba(0,0,0,0.2);
-  text-align: center;
-}
+      padding: 20px;
+      box-sizing: border-box;
+    }
 
-h2 {
-  margin-bottom: 20px;
-}
+    @keyframes gradientBG {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
 
-input {
-  width: 100%;
-  padding: 12px;
-  margin-top: 10px;
-  border-radius: 8px;
-  border: 1px solid #ccc;
-  font-size: 16px;
-  box-sizing: border-box;
-}
+    .container {
+      /* Glassmorphism Effect */
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      padding: 40px 30px;
+      border-radius: 20px;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+      text-align: center;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
 
-button {
-  width: 100%;
-  padding: 12px;
-  margin-top: 15px;
-  border: none;
-  border-radius: 8px;
-  background: #007bff;
-  color: white;
-  font-size: 16px;
-  cursor: pointer;
-}
+    /* Custom Scrollbar for container */
+    .container::-webkit-scrollbar { width: 6px; }
+    .container::-webkit-scrollbar-track { background: transparent; }
+    .container::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 10px; }
 
-button:hover {
-  background: #0056b3;
-}
+    h2 {
+      margin-top: 0;
+      margin-bottom: 25px;
+      color: #1e293b;
+      font-weight: 600;
+      font-size: 24px;
+    }
 
-.file-box {
-  background: #fafafa;
-  padding: 15px;
-  margin-top: 10px;
-  border-radius: 10px;
-  border: 1px solid #ddd;
-}
+    input {
+      width: 100%;
+      padding: 14px 16px;
+      margin-top: 10px;
+      border-radius: 12px;
+      border: 2px solid #e2e8f0;
+      background: #f8fafc;
+      font-size: 16px;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+    }
 
-.hidden {
-  display: none;
-}
+    input:focus {
+      outline: none;
+      border-color: #667eea;
+      background: #ffffff;
+      box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.15);
+    }
 
-.error {
-  color: red;
-  margin-top: 10px;
-}
+    button {
+      width: 100%;
+      padding: 14px;
+      margin-top: 20px;
+      border: none;
+      border-radius: 12px;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      font-family: 'Poppins', sans-serif;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(118, 75, 162, 0.3);
+    }
 
-.success {
-  color: green;
-  margin-top: 10px;
-}
+    button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(118, 75, 162, 0.4);
+    }
 
+    button:active {
+      transform: translateY(1px);
+    }
+
+    /* Beautiful Horizontal Row for Files */
+    .file-box {
+      background: #ffffff;
+      padding: 15px;
+      margin-bottom: 15px;
+      border-radius: 16px;
+      border: 1px solid #e2e8f0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+
+    .file-box:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.06);
+      border-color: #cbd5e1;
+    }
+
+    /* Override inline styles smoothly */
+    .file-box img {
+      width: 50px !important;
+      height: 50px !important;
+      border-radius: 12px !important;
+      object-fit: cover;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    }
+
+    .file-box p {
+      margin: 0;
+      flex: 1;
+      text-align: left;
+      padding: 0 15px;
+      font-size: 15px;
+      font-weight: 500;
+      color: #334155;
+    }
+
+    .file-box button {
+      width: auto;
+      margin-top: 0;
+      padding: 8px 16px;
+      font-size: 14px;
+      border-radius: 8px;
+      background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+      box-shadow: 0 4px 10px rgba(56, 239, 125, 0.2);
+    }
+
+    .file-box button:hover {
+      box-shadow: 0 6px 15px rgba(56, 239, 125, 0.35);
+    }
+
+    .hidden {
+      display: none !important;
+    }
+
+    .error {
+      color: #ef4444;
+      margin-top: 15px;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .success {
+      color: #10b981;
+      margin-top: 15px;
+      font-size: 14px;
+      font-weight: 500;
+    }
   </style>
 </head>
 <body><div class="container">
   <div id="loginPage">
-    <h2>Enter 10 Digit PIN</h2>
-    <input type="password" id="mainPin" maxlength="10" placeholder="Enter 10 Digit PIN">
-    <button onclick="checkMainPin()">Open Files</button>
+    <h2>Enter 10 Digit Admin PIN</h2>
+    <input type="password" id="mainPin" maxlength="10" placeholder="Enter 10 Digit Number">
+    <button onclick="checkMainPin()">Submit</button>
     <div id="mainError" class="error"></div>
   </div>  <div id="filesPage" class="hidden">
-    <h2>Download Files</h2><div class="file-box">
-  <p>File 1</p>
-  <button onclick="downloadFile('1111', 'file1.pdf')">Download</button>
-</div>
+    <h2>My Files</h2><div class="file-box">
 
-<div class="file-box">
-  <p>File 2</p>
-  <button onclick="downloadFile('2222', 'file2.pdf')">Download</button>
-</div>
+  <img src="https://share.google/LExH8zrIQz8XRwEVt" alt="File Image" style="width:80px;border-radius:10px;">
+  <p> Primium Lifafa</p>
+      <button onclick="downloadFile('5636', 'file1.pdf')">Download</button>
+    </div><div class="file-box">
 
-<div class="file-box">
-  <p>File 3</p>
-  <button onclick="downloadFile('3333', 'file3.pdf')">Download</button>
-</div>
+  <img src="https://via.placeholder.com/80" alt="File Image" style="width:80px;border-radius:10px;">
+  <p> Digital Product</p>
+      <button onclick="downloadFile('6856', 'file2.pdf')">Download</button>
+    </div><div class="file-box">
 
-<div class="file-box">
+  <img src="https://via.placeholder.com/80" alt="File Image" style="width:80px;border-radius:10px;">
+  <p>Gateway Panel</p>
+      <button onclick="downloadFile('5636', 'file3.pdf')">Download</button>
+    </div><div class="file-box">
+
+  <img src="https://via.placeholder.com/80" alt="File Image" style="width:80px;border-radius:10px;">
   <p>File 4</p>
-  <button onclick="downloadFile('4444', 'file4.pdf')">Download</button>
-</div>
+      <button onclick="downloadFile('7068', 'file4.pdf')">Download</button>
+    </div><div class="file-box">
 
-<div class="file-box">
+  <img src="https://via.placeholder.com/80" alt="File Image" style="width:80px;border-radius:10px;">
   <p>File 5</p>
-  <button onclick="downloadFile('5555', 'file5.pdf')">Download</button>
-</div>
-
-<div id="downloadMessage"></div>
+      <button onclick="downloadFile('786', 'file5.pdf')">Download</button>
+    </div><div id="downloadMessage"></div>
 
   </div>
 </div><script>
   // 10 digit main pin
-  const correctMainPin = "1234567890";
+  const correctMainPin = "764351928";
 
   function checkMainPin() {
     const enteredPin = document.getElementById("mainPin").value;
@@ -121,8 +221,24 @@ button:hover {
     if (enteredPin === correctMainPin) {
       document.getElementById("loginPage").classList.add("hidden");
       document.getElementById("filesPage").classList.remove("hidden");
+
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'success',
+        title: 'PIN Verified Successfully',
+        showConfirmButton: false,
+        timer: 2000
+      });
     } else {
-      errorBox.innerText = "Wrong 10 Digit PIN";
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'error',
+        title: 'Wrong 10 Digit PIN',
+        showConfirmButton: false,
+        timer: 2000
+      });
     }
   }
 
@@ -137,11 +253,23 @@ button:hover {
       link.click();
       document.body.removeChild(link);
 
-      document.getElementById("downloadMessage").innerHTML =
-        `<p class='success'>${fileName} downloading...</p>`;
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'success',
+        title: `${fileName} Downloading...`,
+        showConfirmButton: false,
+        timer: 2000
+      });
     } else {
-      document.getElementById("downloadMessage").innerHTML =
-        `<p class='error'>Wrong Download PIN for ${fileName}</p>`;
+      Swal.fire({
+        toast: true,
+        position: 'top-end',
+        icon: 'error',
+        title: `Wrong PIN for ${fileName}`,
+        showConfirmButton: false,
+        timer: 2000
+      });
     }
   }
 </script></body>
